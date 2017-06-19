@@ -16,13 +16,14 @@ router.get("/",function(req,res){
 
 router.post("/",middleware.isLoggedIn,function(req,res){
     var name = req.body.name;
+    var price = req.body.price;
     var image = req.body.image;
     var description = req.body.description;
     var author = {
         id: req.user._id,
         username : req.user.username
     }
-    var newCampground = {name : name, image:image , description:description , author : author};
+    var newCampground = {name : name, price:price ,image:image , description:description , author : author};
     //Create new campground and save to dB
    
         Campground.create(newCampground,function(err,newlyCreated){
@@ -42,8 +43,8 @@ router.get("/:id",function(req,res){
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log("can't find ")
+            res.redirect("/campgrounds");
         } else {
-            console.log(foundCampground)
             //render show template with that campground
             res.render("campgrounds/show", {campground: foundCampground});
         }
