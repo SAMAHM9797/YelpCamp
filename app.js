@@ -16,9 +16,11 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campground"),
     indexRoutes        = require("./routes/index");
 
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v10";
+mongoose.connect(url);
 
 //mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://Sameer:YelpPass@ds131742.mlab.com:31742/yelpcamp");
+//mongoose.connect("mongodb://Sameer:YelpPass@ds131742.mlab.com:31742/yelpcamp");
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine","ejs");
@@ -30,7 +32,7 @@ app.use(flash());
 //Passport configuration
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "XlC4utIPM8hxZ-aw52x0dz5DMQD1M5wQ",
     resave: false,
     saveUninitialized: false
 }));
@@ -53,6 +55,7 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(process.env.PORT,process.env.IP , function(){
+app.listen(process.env.PORT,process.env.IP,function(){
     console.log("Yelpcamp server has started");
 });
+
